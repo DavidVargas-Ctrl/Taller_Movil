@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
@@ -15,6 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Clase25Febrero"
         tools:targetApi="31">
+        <activity
+            android:name=".gps"
+            android:exported="false" />
+        <activity
+            android:name=".Gps"
+            android:exported="false"
+            android:theme="@style/Theme.Clase25Febrero" />
         <activity
             android:name=".PantallaFrame"
             android:exported="false" />

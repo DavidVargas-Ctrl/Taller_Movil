@@ -61,6 +61,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener,
                 Toast.makeText(baseContext, "No se ha seleccionado una opcion", Toast.LENGTH_LONG).show()
             }
         }
+        binding.button5.setOnClickListener {
+            startActivity(Intent(this, gps::class.java))
+        }
 
         //Leer contactos
         val mProjection = arrayOf(ContactsContract.Profile._ID, ContactsContract.Profile.DISPLAY_NAME_PRIMARY)
