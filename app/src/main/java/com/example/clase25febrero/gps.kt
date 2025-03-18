@@ -15,6 +15,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import kotlin.math.roundToInt
 
 class gps : AppCompatActivity() {
     lateinit var binding: ActivityGpsBinding
@@ -38,6 +39,10 @@ class gps : AppCompatActivity() {
                     binding.textView7.text = location.altitude.toString()
                     binding.textView8.text = location.latitude.toString()
                     binding.textView9.text = location.longitude.toString()
+
+
+                    val distancia = distance(location.latitude, location.longitude)
+                    binding.textView10.text = "\nDistancia: $distancia km"
                 }
             }
         }
@@ -113,6 +118,14 @@ class gps : AppCompatActivity() {
             )
         }
     }
+    private fun stopLocationUpdates() {
+        mFusedLocationProviderClient.removeLocationUpdates(mLocationCallback)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopLocationUpdates()
+    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -127,5 +140,20 @@ class gps : AppCompatActivity() {
                 binding.textView7.text = "Permiso de ubicación denegado"
             }
         }
+    }
+
+
+    fun distance(lat2: Double, long2: Double): Double {
+        val lat1=4.70145
+        val long1=-74.14606
+        val RADIUS_OF_EARTH_KM = 6378.0
+        val latDistance = Math.toRadians(lat1 - lat2)
+        val lngDistance = Math.toRadians(long1 - long2)
+        val a = (Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                * Math.sin(lngDistance / 2) * Math.sin(lngDistance / 2))
+        val c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+        val result = RADIUS_OF_EARTH_KM * c
+        return (result * 100.0).roundToInt() / 100.0
     }
 }
